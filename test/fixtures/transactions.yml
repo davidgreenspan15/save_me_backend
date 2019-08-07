@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  kind: MyString
+  description: MyString
+  frequency: MyString
+  price: 
+  date: MyString
+  category: one
+  user: one
+
+two:
+  kind: MyString
+  description: MyString
+  frequency: MyString
+  price: 
+  date: MyString
+  category: two
+  user: two
