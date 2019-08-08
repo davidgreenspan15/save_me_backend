@@ -15,7 +15,21 @@ class TransactionsController < ApplicationController
       render json: {errors: transaction.errors.full_messages}
     end
   end
+
+  def update
+    transaction = Transaction.find(params[:id])
+    transaction.update(transaction_params)
+    render json: transaction
+  end
+  
+  def destroy
+    transaction = Transaction.find(params[:id])
+    transaction_id = transaction.id
+    transaction.destroy
+    render json: transaction_id
+  end
 end
+
 
 private
 
