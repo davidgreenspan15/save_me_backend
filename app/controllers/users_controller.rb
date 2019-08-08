@@ -14,11 +14,31 @@ class UsersController < ApplicationController
   end
 
   def update
-    byebug
+
     user = User.find(params[:id])
     user.update(name: params[:name], username: params[:username], stock_level: params[:stock_level], password: user.password_digest)
     render json: user
   end
+
+  def update_password
+
+    user = User.find(params[:id])
+    if user && user.authenticate(params[:old_password])
+      user.update(name: user.name, username: user.username, stock_level: user.stock_level, password: params[:new_password])
+      render json: user
+    else
+      render json: {errors: "Old password invalid!"}
+    end
+  end
+
+  def destroy
+    byebug
+    user = User.find(params[:id])
+    user.destroy
+    render json: {message:"deleted"}
+  end
+
+
 end
 
 private
