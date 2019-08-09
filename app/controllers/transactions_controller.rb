@@ -8,7 +8,11 @@ class TransactionsController < ApplicationController
   def create
 
     transaction = Transaction.new(transaction_params)
-
+    if transaction.kind == "Expense" and transaction.price > 0
+      transaction.price = transaction.price * -1
+    elsif transaction.kind == "Income" and transaction.price < 0
+      transaction.price = transaction.price * -1
+    end
     if transaction.save
       render json: transaction
     else
@@ -19,9 +23,15 @@ class TransactionsController < ApplicationController
   def update
     transaction = Transaction.find(params[:id])
     transaction.update(transaction_params)
+    if transaction.kind == "Expense" and transaction.price > 0
+      transaction.update(price: transaction.price * -1)
+    elsif transaction.kind == "Income" and transaction.price < 0
+      transaction.update(price: transaction.price * -1)
+    end
+
     render json: transaction
   end
-  
+
   def destroy
     transaction = Transaction.find(params[:id])
     transaction_id = transaction.id
