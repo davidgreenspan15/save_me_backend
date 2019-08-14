@@ -5,6 +5,30 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+require 'csv'
+
+csv_text = File.read(Rails.root.join('lib', 'seeds', 'sm.csv'))
+csv = CSV.parse(csv_text, :headers => false, :encoding => 'ISO-8859-1')
+csv.each do |row|
+
+  s = Stock.new
+  s.name = row[0]
+  s.symbol = row[1]
+  s.purchase_price = row[2].to_f
+  s.ytd = row[3].to_f
+  s.three_ytd = row[4].to_f
+  s.description = row[5]
+  s.category = row[6]
+  s.sector = row[7]
+  s.risk_level = row[8].to_i
+  s.stock_url = row[9]
+  s.save
+  puts "#{s.name}, #{s.symbol} saved"
+end
+
+puts "There are now #{Stock.count} rows in the transactions table"
+
+
 
 # create Users
 david = User.create(name: "David", username:"rami", password:"123", stock_level:1)
