@@ -25,11 +25,14 @@ ActiveRecord::Schema.define(version: 2019_08_07_122825) do
   create_table "stocks", force: :cascade do |t|
     t.string "name"
     t.string "symbol"
-    t.float "current_price"
-    t.string "ytd_return"
+    t.float "purchase_price"
+    t.float "ytd"
+    t.float "three_ytd"
+    t.string "sector"
     t.string "description"
     t.string "category"
-    t.integer "safety_level"
+    t.integer "risk_level"
+    t.string "stock_url"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
