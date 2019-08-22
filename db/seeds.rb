@@ -26,7 +26,7 @@ csv.each do |row|
   puts "#{s.name}, #{s.symbol} saved"
 end
 
-puts "There are now #{Stock.count} rows in the transactions table"
+
 
 
 
@@ -57,12 +57,35 @@ jake = User.create(name: "Jake", username:"jake", password:"123", stock_level:2)
 
 
 # create transactions
-  Transaction.create(kind: "Expense",description: "Netflix",frequency: "Once",price: -12.99,date: "2019-08-09" ,category_id: 1, user_id: 1)
-  Transaction.create(kind: "Expense",description: "Rent",frequency: "Once",price: - 200,date: "2019-08-11" ,category_id: 8, user_id: 1)
-  Transaction.create(kind: "Expense",description: "HBO",frequency: "Once",price: - 12.99,date: "2019-08-30" ,category_id: 1, user_id: 1)
-  Transaction.create(kind: "Expense",description: "Pizza",frequency: "Once",price: - 12.99,date: "2019-08-09" ,category_id: 7, user_id: 1)
-  Transaction.create(kind: "Expense",description: "Uber",frequency: "Once",price: - 42.00,date: "2019-08-15" ,category_id: 9, user_id: 1)
-  Transaction.create(kind: "Expense",description: "Tuition",frequency: "Once",price: - 150,date: "2019-08-09" ,category_id: 13, user_id: 1)
-  Transaction.create(kind: "Expense",description: "Bet",frequency: "Once",price: - 60.00,date: "2019-08-09" ,category_id: 4, user_id: 1)
-  Transaction.create(kind: "Expense",description: "Flowers",frequency: "Once",price: - 15.00,date: "2019-08-09" ,category_id: 16, user_id: 1)
-  Transaction.create(kind: "Expense",description: "Spotify",frequency: "Once",price: - 12.99,date: "2019-08-09" ,category_id: 1, user_id: 1)
+  Transaction.create(kind: "Income",description: "Bonus",frequency: "Once",price: 9000.00,date: "2019-08-22" ,category_id: 2, user_id: 1)
+  Transaction.create(kind: "Income",description: "Salary",frequency: "Once",price: 8300,date: "2019-08-22" ,category_id: 2, user_id: 2)
+  Transaction.create(kind: "Income",description: "Salary",frequency: "Once",price: 2700.00,date: "2019-08-22" ,category_id: 2, user_id: 1)
+  Transaction.create(kind: "Income",description: "Salary",frequency: "Once",price: 482.00,date: "2019-08-17" ,category_id: 2, user_id: 1)
+  Transaction.create(kind: "Income",description: "Salary",frequency: "Once",price: 2000,date: "2019-08-14" ,category_id: 2, user_id: 1)
+  Transaction.create(kind: "Income",description: "Salary",frequency: "Once",price: 3000,date: "2019-08-11" ,category_id: 2, user_id: 2)
+  Transaction.create(kind: "Income",description: "Bonus",frequency: "Once",price: 3750.00,date: "2019-08-10" ,category_id: 2, user_id: 2)
+  Transaction.create(kind: "Income",description: "Salary",frequency: "Once",price: 1800.00,date: "2019-08-05" ,category_id: 2, user_id: 1)
+  Transaction.create(kind: "Income",description: "Bonus",frequency: "Once",price: 2222.99,date: "2019-08-09" ,category_id: 2, user_id: 2)
+
+
+  csv_text_two = File.read(Rails.root.join('lib', 'seeds', 'tr.csv'))
+  csv_two = CSV.parse(csv_text_two, :headers => false, :encoding => 'ISO-8859-1')
+  csv_two.each do |row|
+
+    t = Transaction.new
+    t.kind = row[0]
+    t.description = row[1]
+    t.frequency = row[2]
+    t.price = row[3].to_f
+    month = rand(1..12)
+    day = rand(1..30)
+    year = 2019
+    # `#{year}-#{month}-#{day}`
+    t.date = row[4]
+    t.category_id = row[5].to_i
+    t.user_id = row[6].to_i
+    t.save
+    puts "#{t.kind}, #{t.date} saved"
+  end
+
+  puts "There are now #{Transaction.count} rows in the transactions table"
